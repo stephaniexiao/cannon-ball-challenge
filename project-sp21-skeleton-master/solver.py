@@ -34,7 +34,7 @@ def helper(G, m, t):
 
     edges = list(G.edges) # [(1, 5)]
     nodes = list(G.nodes) # [5]
-    print("Nodes:", nodes)
+    # print("Nodes:", nodes)
 
     if len(nodes) <= 30:
         max_k = 15
@@ -80,7 +80,7 @@ def helper(G, m, t):
 
     # Sorting all weights in ascending order
     shortest_path_edges_and_vertices.sort(key = lambda x: x[2], reverse = False)
-    print(shortest_path_edges_and_vertices)
+    # print(shortest_path_edges_and_vertices)
 
     # print(shortest_path_edges_and_vertices)
     # min_edge_weight = min(shortest_path_edges, key = lambda x: x[2]) #(A, B, weight)
@@ -134,11 +134,11 @@ def helper(G, m, t):
                     k += new_k
         else:
             if B == None:
-                print("added back node:", A)
+                # print("added back node:", A)
                 c.remove(A)
                 max_c += 1
             else:
-                print("added back edge: ", (A, B))
+                # print("added back edge: ", (A, B))
                 k.remove((A, B))
                 max_k += 1   
     return c, k, m
