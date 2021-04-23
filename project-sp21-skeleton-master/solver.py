@@ -202,12 +202,13 @@ def helper(G, m, t):
 
 # RUN if you want to run ALL inputs:
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
-# if __name__ == '__main__':
-#     inputs = glob.glob('inputs/small/*')
-#     for input_path in inputs:
-#         output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
-#         G = read_input_file(input_path)
-#         c, k = solve(G)
-#         assert is_valid_solution(G, c, k, t)
-#         distance = calculate_score(G, c, k)
-#         write_output_file(G, c, k, output_path)
+if __name__ == '__main__':
+    inputs = glob.glob('inputs/small/*')
+    for input_path in inputs:
+        output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
+        G = read_input_file(input_path)
+        c, k = solve(G)
+        t = len(G.nodes) - 1
+        assert is_valid_solution(G, c, k, t)
+        distance = calculate_score(G, c, k, t)
+        write_output_file(G, c, k, output_path)
