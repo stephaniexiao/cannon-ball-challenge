@@ -198,7 +198,7 @@ def helper(G, m, t):
 #     t = len(G.nodes) - 1
 #     assert is_valid_solution(G, c, k, t)
 #     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-#     write_output_file(G, c, k, 'outputs/small/small-1.out')
+#     write_output_file(G, c, k, 'outputs/large/large-1.out')
 
 # RUN if you want to run ALL inputs:
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
