@@ -31,7 +31,7 @@ def solve(G):
         max_k = 0
         max_c = 0
 
-    c, k, m = helper(G, m, t, max_c, max_k)
+    c, k, m, max_c, max_k = helper(G, m, t, max_c, max_k)
     print("END")
     return c, k 
 
@@ -97,7 +97,7 @@ def helper(G, m, t, max_c, max_k):
         # print("max_k =", max_k)
         if i<= 0 or (max_k <= 0 and max_c <= 0):
             # print ("END")
-            return c, k, m
+            return c, k, m, max_c, max_k
         G_copy = G.copy()
 
         if B == None: 
@@ -130,7 +130,7 @@ def helper(G, m, t, max_c, max_k):
 
         # Checks if removing disconnects the graph
         if is_valid_solution(G, c, k, t): #note this returns true when a node is disconnected
-            new_c, new_k, m = helper(G_copy, m, t, max_c, max_k)
+            new_c, new_k, m, max_c, max_k = helper(G_copy, m, t, max_c, max_k)
             c_copy = c + new_c
             k_copy = k + new_k
             if is_valid_solution(G, c_copy, k_copy, t):
@@ -146,32 +146,32 @@ def helper(G, m, t, max_c, max_k):
                 # print("added back edge: ", (A, B))
                 k.remove((A, B))
                 max_k += 1   
-    return c, k, m
+    return c, k, m, max_c, max_k
 
 # Here's an example of how to run your solver.
 
 # Usage: python3 solver.py test.in
 
 # RUN if you want to run ONE input:
-if __name__ == '__main__':
-    assert len(sys.argv) == 2
-    path = sys.argv[1]
-    G = read_input_file(path)
-    c, k = solve(G)
-    t = len(G.nodes) - 1
-    assert is_valid_solution(G, c, k, t)
-    print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-    write_output_file(G, c, k, 'outputs/small/small-1.out')
+# if __name__ == '__main__':
+#     assert len(sys.argv) == 2
+#     path = sys.argv[1]
+#     G = read_input_file(path)
+#     c, k = solve(G)
+#     t = len(G.nodes) - 1
+#     assert is_valid_solution(G, c, k, t)
+#     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
+#     write_output_file(G, c, k, 'outputs/small/small-1.out')
 
 # RUN if you want to run ALL inputs:
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
-# if __name__ == '__main__':
-#     inputs = glob.glob('inputs/large/*')
-#     for input_path in inputs:
-#         output_path = 'outputs/large/' + basename(normpath(input_path))[:-3] + '.out'
-#         G = read_input_file(input_path)
-#         c, k = solve(G)
-#         t = len(G.nodes) - 1
-#         assert is_valid_solution(G, c, k, t)
-#         distance = calculate_score(G, c, k, t)
-#         write_output_file(G, c, k, output_path)
+if __name__ == '__main__':
+    inputs = glob.glob('inputs/small/*')
+    for input_path in inputs:
+        output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
+        G = read_input_file(input_path)
+        c, k = solve(G)
+        t = len(G.nodes) - 1
+        assert is_valid_solution(G, c, k, t)
+        distance = calculate_score(G, c, k, t)
+        write_output_file(G, c, k, output_path)
