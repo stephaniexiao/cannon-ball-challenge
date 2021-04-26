@@ -41,7 +41,7 @@ def helper(G, m, t, max_c, max_k):
     k = []
 
     if m <= 0:
-        return c, k, m
+        return c, k, m, max_c, max_k
     m = m - 1
 
     edges = list(G.edges) # [(1, 5)]
@@ -153,25 +153,25 @@ def helper(G, m, t, max_c, max_k):
 # Usage: python3 solver.py test.in
 
 # RUN if you want to run ONE input:
-# if __name__ == '__main__':
-#     assert len(sys.argv) == 2
-#     path = sys.argv[1]
-#     G = read_input_file(path)
-#     c, k = solve(G)
-#     t = len(G.nodes) - 1
-#     assert is_valid_solution(G, c, k, t)
-#     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-#     write_output_file(G, c, k, 'outputs/small/small-1.out')
+if __name__ == '__main__':
+    assert len(sys.argv) == 2
+    path = sys.argv[1]
+    G = read_input_file(path)
+    c, k = solve(G)
+    t = len(G.nodes) - 1
+    assert is_valid_solution(G, c, k, t)
+    print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
+    write_output_file(G, c, k, 'outputs/small/small-1.out')
 
 # RUN if you want to run ALL inputs:
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
-if __name__ == '__main__':
-    inputs = glob.glob('inputs/small/*')
-    for input_path in inputs:
-        output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
-        G = read_input_file(input_path)
-        c, k = solve(G)
-        t = len(G.nodes) - 1
-        assert is_valid_solution(G, c, k, t)
-        distance = calculate_score(G, c, k, t)
-        write_output_file(G, c, k, output_path)
+# if __name__ == '__main__':
+#     inputs = glob.glob('inputs/medium/*')
+#     for input_path in inputs:
+#         output_path = 'outputs/medium/' + basename(normpath(input_path))[:-3] + '.out'
+#         G = read_input_file(input_path)
+#         c, k = solve(G)
+#         t = len(G.nodes) - 1
+#         assert is_valid_solution(G, c, k, t)
+#         distance = calculate_score(G, c, k, t)
+#         write_output_file(G, c, k, output_path)
