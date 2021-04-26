@@ -117,7 +117,7 @@ def helper(G, m, t, max_c, max_k):
             c.append(A)
             max_c = max_c - 1
         
-        else:
+        elif B != None:
             if max_k <= 0:
                 continue
             if (A, B) in k or (B, A) in k:
