@@ -1,6 +1,6 @@
 import networkx as nx
 
-def is_valid_solution(G, c, k):
+def is_valid_solution(G, c, k, t):
     """
     Checks whether D is a valid mapping of G, by checking every room adheres to the stress budget.
     Args:
@@ -10,7 +10,8 @@ def is_valid_solution(G, c, k):
     Returns:
         bool: false if removing k and c disconnects the graph
     """
-    size = len(G)
+    # size = len(G)
+    size = t + 1
     H = G.copy()
 
     for road in k:
@@ -26,7 +27,7 @@ def is_valid_solution(G, c, k):
 
     return nx.is_connected(H)
 
-def calculate_score(G, c, k):
+def calculate_score(G, c, k, t):
     """
     Calculates the difference between the original shortest path and the new shortest path.
     Args:
@@ -37,8 +38,10 @@ def calculate_score(G, c, k):
         float: total score
     """
     H = G.copy()
-    assert is_valid_solution(H, c, k)
-    node_count = len(H.nodes)
+    #assert is_valid_solution(H, c, k)
+    assert is_valid_solution(H, c, k, t)
+    #node_count = len(H.nodes)
+    node_count = t + 1
     original_min_dist = nx.dijkstra_path_length(H, 0, node_count-1)
     H.remove_edges_from(k)
     H.remove_nodes_from(c)
