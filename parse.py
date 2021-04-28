@@ -76,7 +76,7 @@ def write_input_file(G, path):
         fo.writelines("\n".join(lines))
         fo.close()
 
-def read_output_file(G, path):
+def read_output_file(G, path, t):
     """
     Parses and validates an output file
 
@@ -133,7 +133,7 @@ def read_output_file(G, path):
             assert H.has_edge(u, v), 'Specified edge is not in input graph'
             removed_edges.append((u,v))
 
-    return utils.calculate_score(G, cities, removed_edges)
+    return utils.calculate_score(G, cities, removed_edges, t)
 
 def write_output_file(G, c, k, path):
     """
