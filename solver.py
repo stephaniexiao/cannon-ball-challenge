@@ -41,6 +41,7 @@ def solve(G):
         first_time = False
         if calculate_score(G, c, k, t) > calculate_score(G, best_c, best_k, t):
             best_c, best_k = c, k
+    print("END")
     return best_c, best_k
 
 def helper(G, m, t, max_c, max_k, first_time):
