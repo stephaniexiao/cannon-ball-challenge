@@ -22,22 +22,25 @@ def solve(G):
     if len(list(G.nodes)) <= 30:
         iterations = 1000
     elif len(list(G.nodes)) <= 50:
-        iterations = 500
+        iterations = 200
     elif len(list(G.nodes)) <= 100: 
-        iterations = 100
+        iterations = 15
     first_time = True
     for i in range(iterations):
-        m = 100000
+        m = 0
         t = len(list(G.nodes)) - 1
         if len(list(G.nodes)) <= 30:
             max_k = 15
             max_c = 1
+            m = 100
         elif len(list(G.nodes)) <= 50:
             max_k = 50
             max_c = 3
+            m = 100
         elif len(list(G.nodes)) <= 100: 
             max_k = 100
             max_c = 5
+            m = 500
         else:
             max_k = 0
             max_c = 0
@@ -83,7 +86,6 @@ def helper(G, m, t, max_c, max_k, first_time):
         shortest_path_edges_and_vertices.sort(key = lambda x: x[2], reverse = True)
     else:
         random.shuffle(shortest_path_edges_and_vertices)
-        
     for A, B, weight in shortest_path_edges_and_vertices:
         if i<= 0 or (max_k <= 0 and max_c <= 0):
             return c, k, m, max_c, max_k, first_time
@@ -134,32 +136,32 @@ def helper(G, m, t, max_c, max_k, first_time):
 # Usage: python3 solver.py test.in
 
 # RUN if you want to run ONE input:
-# if __name__ == '__main__':
-#     assert len(sys.argv) == 2
-#     path = sys.argv[1]
-#     G = read_input_file(path)
-#     c, k = solve(G)
-#     t = len(G.nodes) - 1
-#     assert is_valid_solution(G, c, k, t)
-#     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-#     currScore = read_output_file(G, 'outputs/small/small-2.out', t)
-#     print("currScore", currScore)
-#     if currScore < calculate_score(G, c, k, t):
-#         write_output_file(G, c, k, 'outputs/small/small-2.out')
+if __name__ == '__main__':
+    assert len(sys.argv) == 2
+    path = sys.argv[1]
+    G = read_input_file(path)
+    c, k = solve(G)
+    t = len(G.nodes) - 1
+    assert is_valid_solution(G, c, k, t)
+    print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
+    currScore = read_output_file(G, 'outputs/medium/medium-1.out', t)
+    print("currScore", currScore)
+    if currScore < calculate_score(G, c, k, t):
+        write_output_file(G, c, k, 'outputs/medium/medium-1.out')
 
 # RUN if you want to run ALL inputs:
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
-if __name__ == '__main__':
-    inputs = glob.glob('inputs/small/*')
-    for input_path in inputs:
-        output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
-        G = read_input_file(input_path)
-        c, k = solve(G)
-        t = len(G.nodes) - 1
-        assert is_valid_solution(G, c, k, t)
-        distance = calculate_score(G, c, k, t)
-        print("distance", distance)
-        currScore = read_output_file(G, output_path, t)
-        print("currScore", currScore)
-        if currScore < distance:
-            write_output_file(G, c, k, output_path)
+# if __name__ == '__main__':
+#     inputs = glob.glob('inputs/small/*')
+#     for input_path in inputs:
+#         output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
+#         G = read_input_file(input_path)
+#         c, k = solve(G)
+#         t = len(G.nodes) - 1
+#         assert is_valid_solution(G, c, k, t)
+#         distance = calculate_score(G, c, k, t)
+#         print("distance", distance)
+#         currScore = read_output_file(G, output_path, t)
+#         print("currScore", currScore)
+#         if currScore < distance:
+#             write_output_file(G, c, k, output_path)
