@@ -30,30 +30,21 @@ def solve(G):
         m = 0
         t = len(list(G.nodes)) - 1
         if len(list(G.nodes)) <= 30:
-            max_k = 15
-            max_c = 1
-            m = 100
+            max_k, max_c, m = 15, 1, 100
         elif len(list(G.nodes)) <= 50:
-            max_k = 50
-            max_c = 3
-            m = 100
+            max_k, max_c, m = 50, 3, 100
         elif len(list(G.nodes)) <= 100: 
-            max_k = 100
-            max_c = 5
-            m = 500
+            max_k, max_c, m = 100, 5, 500
         else:
-            max_k = 0
-            max_c = 0
+            max_k, max_c = 0, 0
         c, k, m, max_c, max_k, first_time = helper(G, m, t, max_c, max_k, first_time)
         first_time = False
         if calculate_score(G, c, k, t) > calculate_score(G, best_c, best_k, t):
-            best_c = c
-            best_k = k
+            best_c, best_k = c, k
     return best_c, best_k
 
 def helper(G, m, t, max_c, max_k, first_time):
-    c = []
-    k = []
+    c, k = [], []
     if m <= 0:
         return c, k, m, max_c, max_k, first_time
     m = m - 1
@@ -68,8 +59,7 @@ def helper(G, m, t, max_c, max_k, first_time):
             shortest_path_edges_and_vertices.append((shortest_path_vertices[i], shortest_path_vertices[i+1], edge_weight))
         # Looping through edges in Dijkstras to get edge weights + calculate heuristic
         v = shortest_path_vertices[i]
-        vertex_weight = 0
-        count = 0
+        vertex_weight, count = 0, 0
         for edge in edges: 
             if edge[0] == v or edge[1] == v:
                 vertex_weight +=  G[edge[0]][edge[1]]['weight']
@@ -160,8 +150,8 @@ if __name__ == '__main__':
         t = len(G.nodes) - 1
         assert is_valid_solution(G, c, k, t)
         distance = calculate_score(G, c, k, t)
-        print("distance", distance)
+        # print("distance", distance)
         currScore = read_output_file(G, output_path, t)
-        print("currScore", currScore)
+        # print("currScore", currScore)
         if currScore < distance:
             write_output_file(G, c, k, output_path)
