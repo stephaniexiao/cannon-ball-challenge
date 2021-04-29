@@ -20,9 +20,9 @@ def solve(G):
     best_k = []
 
     if len(list(G.nodes)) <= 30:
-        iterations = 10
+        iterations = 1000
     elif len(list(G.nodes)) <= 50:
-        iterations = 100
+        iterations = 5
     elif len(list(G.nodes)) <= 100: 
         iterations = 15
     first_time = True
@@ -231,9 +231,9 @@ def helper(G, m, t, max_c, max_k, first_time):
 # Usage: python3 solver.py 
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
 if __name__ == '__main__':
-    inputs = glob.glob('inputs/small/*')
+    inputs = glob.glob('inputs/medium/*')
     for input_path in inputs:
-        output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
+        output_path = 'outputs/medium/' + basename(normpath(input_path))[:-3] + '.out'
         G = read_input_file(input_path)
         c, k = solve(G)
         t = len(G.nodes) - 1
