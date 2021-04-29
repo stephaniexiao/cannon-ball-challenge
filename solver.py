@@ -20,18 +20,17 @@ def solve(G):
     best_k = []
 
     if len(list(G.nodes)) <= 30:
-        iterations = 1
+        iterations = 10
     elif len(list(G.nodes)) <= 50:
         iterations = 100
     elif len(list(G.nodes)) <= 100: 
-        iterations = 10
-
+        iterations = 15
     first_time = True
     best_score = 0.0
     for i in range(iterations):
         m = 0
         t = len(list(G.nodes)) - 1
-        print("i", i)
+        # print("i:", i)
         if len(list(G.nodes)) <= 30:
             max_k, max_c, m = 15, 1, 100
         elif len(list(G.nodes)) <= 50:
@@ -50,11 +49,11 @@ def solve(G):
             # print("k:", k) 
             # print("score: ", curr_score, best_score)
             if curr_score > best_score:
-                print("best score: ", curr_score, best_score)
+                # print("best score: ", curr_score, best_score)
                 best_score = curr_score
                 best_c, best_k = c, k
 
-    # print("END")
+    print("END")
     return best_c, best_k
 
 def helper(G, m, t, max_c, max_k, first_time):
@@ -215,33 +214,33 @@ def helper(G, m, t, max_c, max_k, first_time):
 # Usage: python3 solver.py test.in
 
 # RUN if you want to run ONE input:
-if __name__ == '__main__':
-    assert len(sys.argv) == 2
-    path = sys.argv[1]
-    G = read_input_file(path)
-    c, k = solve(G)
-    t = len(G.nodes) - 1
-    assert is_valid_solution(G, c, k, t)
-    print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-    currScore = read_output_file(G, 'outputs/large/large-1.out', t)
-    print("currScore", currScore)
-    if currScore < calculate_score(G, c, k, t):
-        write_output_file(G, c, k, 'outputs/large/large-1.out')
+# if __name__ == '__main__':
+#     assert len(sys.argv) == 2
+#     path = sys.argv[1]
+#     G = read_input_file(path)
+#     c, k = solve(G)
+#     t = len(G.nodes) - 1
+#     assert is_valid_solution(G, c, k, t)
+#     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
+#     currScore = read_output_file(G, 'outputs/small/small-2.out', t)
+#     print("currScore", currScore)
+#     if currScore < calculate_score(G, c, k, t):
+#         write_output_file(G, c, k, 'outputs/small/small-2.out')
 
 # RUN if you want to run ALL inputs:
 # Usage: python3 solver.py 
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
-# if __name__ == '__main__':
-#     inputs = glob.glob('inputs/small/*')
-#     for input_path in inputs:
-#         output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
-#         G = read_input_file(input_path)
-#         c, k = solve(G)
-#         t = len(G.nodes) - 1
-#         assert is_valid_solution(G, c, k, t)
-#         distance = calculate_score(G, c, k, t)
-#         # print("distance", distance)
-#         currScore = read_output_file(G, output_path, t)
-#         # print("currScore", currScore)
-#         if currScore < distance:
-#             write_output_file(G, c, k, output_path)
+if __name__ == '__main__':
+    inputs = glob.glob('inputs/small/*')
+    for input_path in inputs:
+        output_path = 'outputs/small/' + basename(normpath(input_path))[:-3] + '.out'
+        G = read_input_file(input_path)
+        c, k = solve(G)
+        t = len(G.nodes) - 1
+        assert is_valid_solution(G, c, k, t)
+        distance = calculate_score(G, c, k, t)
+        # print("distance", distance)
+        currScore = read_output_file(G, output_path, t)
+        # print("currScore", currScore)
+        if currScore < distance:
+            write_output_file(G, c, k, output_path)
