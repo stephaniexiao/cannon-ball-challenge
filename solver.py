@@ -155,4 +155,4 @@ if __name__ == '__main__':
         currScore = read_output_file(G, output_path, t)
         # print("currScore", currScore)
         if currScore < distance:
-            write_output_file(G, c, k, output_path)
+                        write_output_file(G, c, k, output_path)
