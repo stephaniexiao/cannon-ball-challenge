@@ -24,7 +24,7 @@ def solve(G):
     if len(list(G.nodes)) <= 30:
         iterations = 500
     elif len(list(G.nodes)) <= 50:
-        iterations = 1
+        iterations = 100
     elif len(list(G.nodes)) <= 100: 
         iterations = 15
     first_time = True
