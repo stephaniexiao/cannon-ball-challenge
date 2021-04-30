@@ -5,6 +5,7 @@ import sys
 from os.path import basename, normpath
 import glob
 import random
+from datetime import datetime
 
 
 def solve(G):
@@ -15,6 +16,7 @@ def solve(G):
         c: list of cities to remove
         k: list of edges to remove
     """
+    random.seed(datetime.now())
     iterations = 0
     best_c = []
     best_k = []
@@ -22,7 +24,7 @@ def solve(G):
     if len(list(G.nodes)) <= 30:
         iterations = 500
     elif len(list(G.nodes)) <= 50:
-        iterations = 300
+        iterations = 1
     elif len(list(G.nodes)) <= 100: 
         iterations = 15
     first_time = True
@@ -223,33 +225,33 @@ def helper(G, m, t, max_c, max_k, first_time, is_large):
 # Usage: python3 solver.py test.in
 
 # RUN if you want to run ONE input:
-# if __name__ == '__main__':
-#     assert len(sys.argv) == 2
-#     path = sys.argv[1]
-#     G = read_input_file(path)
-#     c, k = solve(G)
-#     t = len(G.nodes) - 1
-#     assert is_valid_solution(G, c, k, t)
-#     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-#     currScore = read_output_file(G, 'outputs/large/large-101.out', t)
-#     print("currScore", currScore)
-#     if currScore < calculate_score(G, c, k, t):
-#         write_output_file(G, c, k, 'outputs/large/large-101.out')
+if __name__ == '__main__':
+    assert len(sys.argv) == 2
+    path = sys.argv[1]
+    G = read_input_file(path)
+    c, k = solve(G)
+    t = len(G.nodes) - 1
+    assert is_valid_solution(G, c, k, t)
+    print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
+    currScore = read_output_file(G, 'outputs/medium/medium-101.out', t)
+    print("currScore", currScore)
+    if currScore < calculate_score(G, c, k, t):
+        write_output_file(G, c, k, 'outputs/medium/medium-101.out')
 
 # RUN if you want to run ALL inputs:
 # Usage: python3 solver.py 
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
-if __name__ == '__main__':
-    inputs = glob.glob('inputs/large/*')
-    for input_path in inputs:
-        output_path = 'outputs/large/' + basename(normpath(input_path))[:-3] + '.out'
-        G = read_input_file(input_path)
-        c, k = solve(G)
-        t = len(G.nodes) - 1
-        assert is_valid_solution(G, c, k, t)
-        distance = calculate_score(G, c, k, t)
-        # print("distance", distance)
-        currScore = read_output_file(G, output_path, t)
-        # print("currScore", currScore)
-        if currScore < distance:
-            write_output_file(G, c, k, output_path)
+# if __name__ == '__main__':
+#     inputs = glob.glob('inputs/large/*')
+#     for input_path in inputs:
+#         output_path = 'outputs/large/' + basename(normpath(input_path))[:-3] + '.out'
+#         G = read_input_file(input_path)
+#         c, k = solve(G)
+#         t = len(G.nodes) - 1
+#         assert is_valid_solution(G, c, k, t)
+#         distance = calculate_score(G, c, k, t)
+#         # print("distance", distance)
+#         currScore = read_output_file(G, output_path, t)
+#         # print("currScore", currScore)
+#         if currScore < distance:
+#             write_output_file(G, c, k, output_path)
