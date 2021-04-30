@@ -20,11 +20,11 @@ def solve(G):
     best_k = []
 
     if len(list(G.nodes)) <= 30:
-        iterations = 1
+        iterations = 500
     elif len(list(G.nodes)) <= 50:
-        iterations = 1
+        iterations = 300
     elif len(list(G.nodes)) <= 100: 
-        iterations = 1
+        iterations = 15
     first_time = True
     best_score = 0.0
     is_large = False
