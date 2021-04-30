@@ -20,13 +20,14 @@ def solve(G):
     best_k = []
 
     if len(list(G.nodes)) <= 30:
-        iterations = 1000
+        iterations = 1
     elif len(list(G.nodes)) <= 50:
-        iterations = 5
+        iterations = 1
     elif len(list(G.nodes)) <= 100: 
-        iterations = 15
+        iterations = 1
     first_time = True
     best_score = 0.0
+    is_large = False
     for i in range(iterations):
         m = 0
         t = len(list(G.nodes)) - 1
@@ -37,33 +38,34 @@ def solve(G):
             max_k, max_c, m = 50, 3, 100
         elif len(list(G.nodes)) <= 100: 
             max_k, max_c, m = 100, 5, 500
+            is_large = True
         else:
             max_k, max_c = 0, 0
         # print("t1", t)
-        c, k, m, max_c, max_k, first_time = helper(G, m, t, max_c, max_k, first_time)
+        c, k, m, max_c, max_k, first_time = helper(G, m, t, max_c, max_k, first_time, is_large)
         first_time = False
 
         if is_valid_solution(G, c, k, t):
             curr_score = calculate_score(G, c, k, t)
             # print("c:", c)
             # print("k:", k) 
-            # print("score: ", curr_score, best_score)
+            #print("score: ", curr_score, best_score)
             if curr_score > best_score:
-                # print("best score: ", curr_score, best_score)
+                #print("best score: ", curr_score, best_score)
                 best_score = curr_score
                 best_c, best_k = c, k
 
     print("END")
     return best_c, best_k
 
-def helper(G, m, t, max_c, max_k, first_time):
+def helper(G, m, t, max_c, max_k, first_time, is_large):
     # print("t2", t)
     c, k = [], []
     # print(m)
     if m <= 0: #if there's nothing else to remove, return 
         return c, k, m, max_c, max_k, first_time
     
-    # print(max_c, max_k)
+    # print(max_c, max_k)pyt
     if max_c <=0 and max_k <=0:
         return c, k, m, max_c, max_k, first_time
 
@@ -86,7 +88,10 @@ def helper(G, m, t, max_c, max_k, first_time):
                 # print("E1", i, i+1)
                 edge_weight = G[shortest_path_vertices[i]][shortest_path_vertices[i+1]]['weight']
                 shortest_path_edges_weights.append((shortest_path_vertices[i], shortest_path_vertices[i+1], edge_weight))
-                sum_edges_weight += edge_weight
+                if is_large:
+                    sum_edges_weight += (edge_weight/100.0)*(edge_weight/100.0)
+                else:
+                    sum_edges_weight += edge_weight
         # Looping through edges in Dijkstras to get edge weights + calculate heuristic
         v = shortest_path_vertices[i]
         
@@ -106,7 +111,11 @@ def helper(G, m, t, max_c, max_k, first_time):
                 vertex_weight +=  G[edge[0]][edge[1]]['weight']
                 count += 1
         if count > 0:
-            vertex_weight = 0.9 * vertex_weight
+            if is_large:
+                vertex_weight = 0.01*vertex_weight*0.01*vertex_weight
+            else:
+                vertex_weight = 0.9*vertex_weight
+        
         shortest_path_vertices_weights.append((v, vertex_weight))
         sum_vertices_weight += vertex_weight
 
@@ -134,7 +143,7 @@ def helper(G, m, t, max_c, max_k, first_time):
                 G_copy.remove_edge(A, B)
                 k.append((A,B))
                 max_k = max_k - 1
-                new_c, new_k, m, max_c, max_k, first_time  = helper(G_copy, m, t, max_c, max_k, first_time)
+                new_c, new_k, m, max_c, max_k, first_time  = helper(G_copy, m, t, max_c, max_k, first_time, is_large)
                 c += new_c                 
                 k += new_k
                 # print("ca:", m, c)
@@ -152,7 +161,7 @@ def helper(G, m, t, max_c, max_k, first_time):
                 G_copy.remove_node(A)
                 c.append(A)
                 max_c = max_c - 1
-                new_c, new_k, m, max_c, max_k, first_time  = helper(G_copy, m, t, max_c, max_k, first_time)
+                new_c, new_k, m, max_c, max_k, first_time  = helper(G_copy, m, t, max_c, max_k, first_time, is_large)
                 c += new_c                 
                 k += new_k
                 # print("ca:", m, c)
@@ -214,33 +223,33 @@ def helper(G, m, t, max_c, max_k, first_time):
 # Usage: python3 solver.py test.in
 
 # RUN if you want to run ONE input:
-# if __name__ == '__main__':
-#     assert len(sys.argv) == 2
-#     path = sys.argv[1]
-#     G = read_input_file(path)
-#     c, k = solve(G)
-#     t = len(G.nodes) - 1
-#     assert is_valid_solution(G, c, k, t)
-#     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-#     currScore = read_output_file(G, 'outputs/small/small-2.out', t)
-#     print("currScore", currScore)
-#     if currScore < calculate_score(G, c, k, t):
-#         write_output_file(G, c, k, 'outputs/small/small-2.out')
+if __name__ == '__main__':
+    assert len(sys.argv) == 2
+    path = sys.argv[1]
+    G = read_input_file(path)
+    c, k = solve(G)
+    t = len(G.nodes) - 1
+    assert is_valid_solution(G, c, k, t)
+    print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
+    currScore = read_output_file(G, 'outputs/large/large-101.out', t)
+    print("currScore", currScore)
+    if currScore < calculate_score(G, c, k, t):
+        write_output_file(G, c, k, 'outputs/large/large-101.out')
 
 # RUN if you want to run ALL inputs:
 # Usage: python3 solver.py 
 # For testing a folder of inputs to create a folder of outputs, you can use glob (need to import it)
-if __name__ == '__main__':
-    inputs = glob.glob('inputs/medium/*')
-    for input_path in inputs:
-        output_path = 'outputs/medium/' + basename(normpath(input_path))[:-3] + '.out'
-        G = read_input_file(input_path)
-        c, k = solve(G)
-        t = len(G.nodes) - 1
-        assert is_valid_solution(G, c, k, t)
-        distance = calculate_score(G, c, k, t)
-        # print("distance", distance)
-        currScore = read_output_file(G, output_path, t)
-        # print("currScore", currScore)
-        if currScore < distance:
-            write_output_file(G, c, k, output_path)
+# if __name__ == '__main__':
+#     inputs = glob.glob('inputs/large/*')
+#     for input_path in inputs:
+#         output_path = 'outputs/large/' + basename(normpath(input_path))[:-3] + '.out'
+#         G = read_input_file(input_path)
+#         c, k = solve(G)
+#         t = len(G.nodes) - 1
+#         assert is_valid_solution(G, c, k, t)
+#         distance = calculate_score(G, c, k, t)
+#         # print("distance", distance)
+#         currScore = read_output_file(G, output_path, t)
+#         # print("currScore", currScore)
+#         if currScore < distance:
+#             write_output_file(G, c, k, output_path)
