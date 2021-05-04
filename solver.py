@@ -24,7 +24,7 @@ def solve(G):
     if len(list(G.nodes)) <= 30:
         iterations = 500
     elif len(list(G.nodes)) <= 50:
-        iterations = 100
+        iterations = 200
     elif len(list(G.nodes)) <= 100: 
         iterations = 15
     first_time = True
@@ -36,8 +36,10 @@ def solve(G):
         # print("i:", i)
         if len(list(G.nodes)) <= 30:
             max_k, max_c, m = 15, 1, 100
+            is_large = True
         elif len(list(G.nodes)) <= 50:
             max_k, max_c, m = 50, 3, 100
+            is_large = True
         elif len(list(G.nodes)) <= 100: 
             max_k, max_c, m = 100, 5, 500
             is_large = True
@@ -233,10 +235,10 @@ def helper(G, m, t, max_c, max_k, first_time, is_large):
 #     t = len(G.nodes) - 1
 #     assert is_valid_solution(G, c, k, t)
 #     print("Shortest Path Difference: {}".format(calculate_score(G, c, k, t)))
-#     currScore = read_output_file(G, 'outputs/medium/medium-101.out', t)
+#     currScore = read_output_file(G, 'outputs/small/small-53.out', t)
 #     print("currScore", currScore)
 #     if currScore < calculate_score(G, c, k, t):
-#         write_output_file(G, c, k, 'outputs/medium/medium-101.out')
+#         write_output_file(G, c, k, 'outputs/small/small-53.out')
 
 # RUN if you want to run ALL inputs:
 # Usage: python3 solver.py 
