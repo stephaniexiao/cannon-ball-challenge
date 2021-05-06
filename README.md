@@ -20,3 +20,11 @@ When writing inputs/outputs:
 - Make sure you use the functions `write_input_file` and `write_output_file` provided
 - Run the functions `read_input_file` and `read_output_file` to validate your files before submitting!
   - These are the functions run by the autograder to validate submissions
+
+
+Instructions:
+1. Adust filepaths in the last if statement of `solver.py` according to which graphs you want to run: small, medium, or large. For example, if you want to run small graphs, you would change line the input of 217 to be `inputs/small/*`. On line, 222, modify the path to be `outputs/small/`
+2. Run `python3 solver.py` to create 300 output files for the respective graph type
+3. Repeat Steps 1 and 2 for both medium and large graphs.
+4. Submit to CS170 Leaderboard.
+5. Repeat Steps 1, 2, 3, and 4 for a week to continue generating the best outputs.
