@@ -73,7 +73,7 @@ def helper(G, m, t, max_c, max_k, first_time, is_medium_or_large):
                     sum_edges_weight += (edge_weight/100.0) * (edge_weight/100.0)
                 else:
                     sum_edges_weight += edge_weight
-        # Looping through edges in Dijkstras to get edge weights + calculate heuristic
+        # Looping through edges in Dijkstras to get edge weights + calculate heuristic 
         v = shortest_path_vertices[i]
         if v == 0:
             continue
